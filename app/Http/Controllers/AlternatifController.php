@@ -69,5 +69,4 @@ class AlternatifController extends Controller
 
         return redirect()->route('alternatif')->with('success', 'Alternative deleted successfully.');
     }
-    
 }

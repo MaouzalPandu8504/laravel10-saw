@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\BobotController;
 use App\Http\Controllers\NormalisasiController;
 use App\Http\Controllers\HasilController;
 use App\Http\Controllers\Auth\GoogleController;
-
-use App\Models\Alternatif;
+use App\Http\Controllers\DashboradController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,14 +21,19 @@ use App\Models\Alternatif;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
+
+Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboradController::class, 'index']) -> middleware(['auth', 'verified']) -> name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
